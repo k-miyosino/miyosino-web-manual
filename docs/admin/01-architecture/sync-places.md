@@ -14,34 +14,34 @@ title: 周辺施設データ同期（sync-places）
 
 ## 同期フロー
 
-```
-GitHub Actions（sync.yml）
-    │
-    │  トリガー:
-    │  ・毎週日曜 18:00 UTC（月曜 AM 3:00 JST）に自動実行
-    │  ・GitHub Actions画面から手動実行も可能
-    ▼
-Google Cloud Places API（個人アカウント管理）
-    │
-    │  指定した場所IDをもとに施設情報を取得
-    │  （名称・住所・カテゴリ・営業時間・評価など）
-    ▼
-scripts/sync-places.ts（miyosino-webリポジトリ内）
-    │
-    │  1. Google Places APIからデータ取得
-    │  2. Kintoneの既存レコードと比較（差分チェック）
-    │  3. 新規施設 → レコード追加
-    │     変更あり → レコード更新
-    │     廃業等  → レコード削除（または非公開化）
-    ▼
-Kintone アプリ #120（周辺施設）
-    │
-    │  ホームページからのリクエスト時に読み出し
-    ▼
-Cloudflare Workers（miyosino-places-api）
-    │
-    ▼
-ホームページ「周辺施設」ページに表示
+```mermaid
+flowchart TD
+    subgraph Trigger["トリガー"]
+        Cron["スケジュール実行\n毎週日曜 18:00 UTC\n（月曜 AM 3:00 JST）"]
+        Manual["手動実行\nGitHub Actions\nRun workflow"]
+    end
+
+    GHA["GitHub Actions\nsync.yml"]
+    Places["Google Cloud Places API\n※個人アカウント管理"]
+    Script["scripts/sync-places.ts"]
+
+    subgraph Diff["差分処理"]
+        Add["新規施設\n→ レコード追加"]
+        Update["情報変更\n→ レコード更新"]
+        Delete["廃業等\n→ レコード削除"]
+    end
+
+    Kintone["Kintone アプリ #120\n（周辺施設）"]
+    Worker["Cloudflare Workers\nmiyosino-places-api"]
+    HP["ホームページ\n周辺施設ページ"]
+
+    Trigger --> GHA
+    GHA -->|"施設情報を取得"| Places
+    Places -->|"データ返却"| Script
+    Script --> Diff
+    Diff --> Kintone
+    Kintone -->|"リクエスト時に読み出し"| Worker
+    Worker --> HP
 ```
 
 ---

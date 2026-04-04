@@ -6,52 +6,50 @@ title: システム全体像
 
 ## 構成図（通常のデータフロー）
 
-```
-ブラウザ（ユーザー）
-    │
-    ▼
-Next.js 静的サイト（HTML/CSS/JS）
-    ├── GitHub Pages（ステージング）
-    └── さくらインターネット（本番）
-    │
-    ├─────────────────────────────────────┐
-    ▼（contents-api）                     ▼（その他Workers）
-Cloudflare Workers                   Cloudflare Workers
-（miyosino-contents-api）            （各種APIエンドポイント）
-    │                                     │
-    ▼                                     ▼
-MicroCMS                             Kintone（バックエンドデータストア）
-    ├── トップ画像                        ├── お知らせ
-    ├── 四季                             ├── 回覧板
-    ├── 自治会活動                        ├── イベント
-    ├── 住民サークル                      ├── 会議情報
-    ├── 共用施設                          ├── 各種申請
-    └── サービス                         ├── グリーンウェルネス
-                                         └── 周辺施設（アプリ #120）
+```mermaid
+flowchart TD
+    Browser["ブラウザ（ユーザー）"]
+
+    subgraph Hosting["ホスティング"]
+        GHPages["GitHub Pages\nステージング"]
+        Sakura["さくらインターネット\n本番"]
+    end
+
+    subgraph Workers["Cloudflare Workers"]
+        ContentsAPI["miyosino-contents-api"]
+        OtherAPIs["各種 API Workers\n(announcements / circulars\n/ events / minutes 等)"]
+    end
+
+    subgraph DataStores["データストア"]
+        MicroCMS["MicroCMS\nトップ画像 / 四季\n自治会活動 / 住民サークル\n共用施設 / サービス"]
+        Kintone["Kintone\nお知らせ / 回覧板\nイベント / 会議情報\n各種申請 / グリーンウェルネス\n周辺施設（#120）"]
+    end
+
+    Browser --> Hosting
+    Browser -->|"CONTENTS_API_ENDPOINT"| ContentsAPI
+    Browser -->|"各種 API エンドポイント"| OtherAPIs
+    ContentsAPI --> MicroCMS
+    OtherAPIs --> Kintone
 ```
 
 ## 構成図（周辺施設データ定期同期）
 
 周辺施設情報のみ、Google Cloud（Places API）から定期的に取得してKintoneに書き込む別フローがあります。
 
-```
-GitHub Actions（sync.yml）
-    │  毎週月曜 AM 3:00 JST に自動実行
-    │  （手動実行も可能）
-    ▼
-Google Cloud Places API
-    │  周辺施設の名称・住所・カテゴリ等を取得
-    ▼
-scripts/sync-places.ts（同期スクリプト）
-    │  取得データを整形・差分チェック
-    ▼
-Kintone（アプリ #120 / 周辺施設）
-    │  レコードを追加・更新・削除
-    ▼
-Cloudflare Workers（miyosino-places-api）
-    │  ホームページからのリクエスト時に読み出し
-    ▼
-ホームページ「周辺施設」ページに表示
+```mermaid
+flowchart LR
+    GHA["GitHub Actions\nsync.yml\n毎週月曜 AM 3:00 JST"]
+    Places["Google Cloud\nPlaces API"]
+    Script["scripts/\nsync-places.ts"]
+    Kintone["Kintone\nアプリ #120"]
+    Worker["Cloudflare Workers\nmiyosino-places-api"]
+    HP["ホームページ\n周辺施設ページ"]
+
+    GHA -->|"施設情報を取得"| Places
+    Places -->|"データ返却"| Script
+    Script -->|"追加 / 更新 / 削除"| Kintone
+    Kintone -->|"読み出し"| Worker
+    Worker -->|"表示"| HP
 ```
 
 詳細は [周辺施設データ同期（sync-places）](sync-places.md) を参照してください。
