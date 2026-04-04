@@ -13,6 +13,8 @@
       href: 01-architecture/kintone-backend.md
     - name: 認証フロー
       href: 01-architecture/auth-flow.md
+    - name: 周辺施設データ同期（sync-places）
+      href: 01-architecture/sync-places.md
 
 - name: 環境変数・設定
   items:
