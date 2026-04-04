@@ -1,0 +1,11 @@
+- name: 組合員向けマニュアル
+  href: resident/
+  homepage: resident/index.md
+
+- name: コンテンツ更新者向けマニュアル
+  href: content/
+  homepage: content/index.md
+
+- name: IT委員会向けマニュアル
+  href: admin/
+  homepage: admin/index.md

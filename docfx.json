@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "build": {
+    "content": [
+      {
+        "files": ["**/*.md", "**/toc.yml"],
+        "src": "docs"
+      }
+    ],
+    "resource": [
+      {
+        "files": ["**/images/**"],
+        "src": "docs"
+      }
+    ],
+    "output": "_site",
+    "template": ["default", "modern"],
+    "globalMetadata": {
+      "_appTitle": "かわつる三芳野団地 マニュアル",
+      "_appName": "みよしのマニュアル",
+      "_appFooter": "Copyright &copy; かわつる三芳野団地管理組合法人 IT委員会",
+      "_enableSearch": true,
+      "_disableContribution": true,
+      "_lang": "ja"
+    }
+  }
+}

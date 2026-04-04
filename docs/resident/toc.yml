@@ -1,0 +1,66 @@
+- name: はじめに
+  href: index.md
+
+- name: ホームページを開く
+  items:
+    - name: ホームページとは
+      href: 01-getting-started/what-is-homepage.md
+    - name: ホームページを開く方法
+      href: 01-getting-started/how-to-open.md
+
+- name: 画面の見かた・基本操作
+  items:
+    - name: 画面の各部の名前
+      href: 02-basic-operation/header-footer.md
+    - name: メニューの使いかた
+      href: 02-basic-operation/navigation.md
+    - name: スマートフォンで見る
+      href: 02-basic-operation/mobile.md
+
+- name: 各ページの説明
+  items:
+    - name: トップページ
+      href: 03-public-pages/home.md
+    - name: 団地の特徴
+      href: 03-public-pages/features.md
+    - name: コミュニティ
+      href: 03-public-pages/community.md
+    - name: 共有施設・サービス
+      href: 03-public-pages/facilities.md
+    - name: 周辺施設
+      href: 03-public-pages/surrounding.md
+    - name: アクセス
+      href: 03-public-pages/access.md
+    - name: お問い合わせの送りかた
+      href: 03-public-pages/contact.md
+
+- name: 組合員専用ページへのログイン
+  items:
+    - name: 組合員専用ページとは
+      href: 04-login/what-is-login.md
+    - name: ログインの方法
+      href: 04-login/how-to-login.md
+    - name: ログアウトのしかた
+      href: 04-login/logout.md
+
+- name: 組合員専用ページの使いかた
+  items:
+    - name: お知らせを見る
+      href: 05-member-pages/announcements.md
+    - name: 回覧板を見る
+      href: 05-member-pages/circulars.md
+    - name: イベント情報を見る
+      href: 05-member-pages/events.md
+    - name: 会議情報を見る
+      href: 05-member-pages/minutes.md
+    - name: 各種申請書をダウンロードする
+      href: 05-member-pages/applications.md
+    - name: グリーンウェルネスを見る
+      href: 05-member-pages/green-wellness.md
+
+- name: 困ったときは
+  items:
+    - name: よくある質問
+      href: 06-trouble/faq.md
+    - name: 問い合わせ先
+      href: 06-trouble/contact-support.md

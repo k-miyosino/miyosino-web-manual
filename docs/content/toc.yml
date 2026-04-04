@@ -1,0 +1,72 @@
+- name: はじめに
+  href: index.md
+
+- name: Kintone基本操作
+  items:
+    - name: Kintoneとは
+      href: 01-kintone-basics/what-is-kintone.md
+    - name: Kintoneへのログイン
+      href: 01-kintone-basics/login-kintone.md
+    - name: アプリ一覧と用途
+      href: 01-kintone-basics/app-overview.md
+
+- name: お知らせ
+  items:
+    - name: お知らせを追加する
+      href: 02-announcements/add.md
+    - name: お知らせを編集する
+      href: 02-announcements/edit.md
+    - name: お知らせを削除する
+      href: 02-announcements/delete.md
+
+- name: 回覧板・配布資料
+  items:
+    - name: 回覧板を追加する
+      href: 03-circulars/add.md
+    - name: 回覧板を編集する
+      href: 03-circulars/edit.md
+    - name: 回覧板を削除する
+      href: 03-circulars/delete.md
+
+- name: イベント情報
+  items:
+    - name: イベントを追加する
+      href: 04-events/add.md
+    - name: イベントを編集する
+      href: 04-events/edit.md
+    - name: イベントを削除する
+      href: 04-events/delete.md
+
+- name: 会議情報
+  items:
+    - name: 会議情報を追加する
+      href: 05-minutes/add.md
+    - name: 会議情報を編集する
+      href: 05-minutes/edit.md
+    - name: 会議情報を削除する
+      href: 05-minutes/delete.md
+
+- name: 各種申請書
+  items:
+    - name: 申請書を追加する
+      href: 06-applications/add.md
+    - name: 申請書を編集する
+      href: 06-applications/edit.md
+    - name: 申請書を削除する
+      href: 06-applications/delete.md
+
+- name: グリーンウェルネス
+  items:
+    - name: 情報を追加する
+      href: 07-green-wellness/add.md
+    - name: 情報を編集する
+      href: 07-green-wellness/edit.md
+    - name: 情報を削除する
+      href: 07-green-wellness/delete.md
+
+- name: Tips・注意事項
+  items:
+    - name: ファイル（PDF）のアップロード方法
+      href: 08-tips/file-upload.md
+    - name: よくある間違いと確認方法
+      href: 08-tips/common-mistakes.md

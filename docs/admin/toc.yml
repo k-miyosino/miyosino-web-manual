@@ -1,0 +1,53 @@
+- name: はじめに
+  href: index.md
+
+- name: システム構成
+  items:
+    - name: システム全体像
+      href: 01-architecture/overview.md
+    - name: Next.js（フロントエンド）
+      href: 01-architecture/nextjs.md
+    - name: Cloudflare Workers（API）
+      href: 01-architecture/cloudflare-workers.md
+    - name: Kintone（バックエンド）
+      href: 01-architecture/kintone-backend.md
+    - name: 認証フロー
+      href: 01-architecture/auth-flow.md
+
+- name: 環境変数・設定
+  items:
+    - name: 環境変数一覧
+      href: 02-environments/env-vars.md
+    - name: GitHub Secrets設定
+      href: 02-environments/github-secrets.md
+    - name: ローカル開発環境構築
+      href: 02-environments/local-dev.md
+
+- name: CI/CD・デプロイ
+  items:
+    - name: GitHub Actionsワークフロー
+      href: 03-cicd/github-actions.md
+    - name: ブランチ戦略
+      href: 03-cicd/branch-strategy.md
+    - name: GitHub Pagesデプロイ（ステージング）
+      href: 03-cicd/deploy-github-pages.md
+    - name: さくらインターネットデプロイ（本番）
+      href: 03-cicd/deploy-sakura.md
+
+- name: Cloudflare Workers管理
+  items:
+    - name: Worker一覧と役割
+      href: 04-workers/worker-list.md
+    - name: 新しいWorkerの追加手順
+      href: 04-workers/add-new-worker.md
+    - name: wrangler設定ファイル
+      href: 04-workers/wrangler-config.md
+
+- name: 既知の課題・注意事項
+  items:
+    - name: Google Cloud属人化課題
+      href: 05-known-issues/google-cloud-singlepoint.md
+    - name: SonarQube
+      href: 05-known-issues/sonarqube.md
+    - name: MicroCMS
+      href: 05-known-issues/microcms.md
