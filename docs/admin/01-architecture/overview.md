@@ -14,18 +14,20 @@ Next.js 静的サイト（HTML/CSS/JS）
     ├── GitHub Pages（ステージング）
     └── さくらインターネット（本番）
     │
-    ▼（APIリクエスト）
-Cloudflare Workers（各種APIエンドポイント）
-    │
-    ▼
-Kintone（バックエンドデータストア）
-    ├── お知らせ
-    ├── 回覧板
-    ├── イベント
-    ├── 会議情報
-    ├── 各種申請
-    ├── グリーンウェルネス
-    └── 周辺施設（アプリ #120）
+    ├─────────────────────────────────────┐
+    ▼（contents-api）                     ▼（その他Workers）
+Cloudflare Workers                   Cloudflare Workers
+（miyosino-contents-api）            （各種APIエンドポイント）
+    │                                     │
+    ▼                                     ▼
+MicroCMS                             Kintone（バックエンドデータストア）
+    ├── トップ画像                        ├── お知らせ
+    ├── 四季                             ├── 回覧板
+    ├── 自治会活動                        ├── イベント
+    ├── 住民サークル                      ├── 会議情報
+    ├── 共用施設                          ├── 各種申請
+    └── サービス                         ├── グリーンウェルネス
+                                         └── 周辺施設（アプリ #120）
 ```
 
 ## 構成図（周辺施設データ定期同期）
@@ -59,13 +61,15 @@ Cloudflare Workers（miyosino-places-api）
 | コンポーネント | 役割 | 技術 |
 |--------------|------|------|
 | フロントエンド | ページ表示・UI | Next.js 15 + React 19 + Tailwind CSS 4 |
-| APIサーバー | Kintoneへのプロキシ・認証 | Cloudflare Workers |
-| データストア | コンテンツ管理 | Kintone（k-miyosino.cybozu.com） |
+| APIサーバー（コンテンツ） | MicroCMSへのプロキシ | Cloudflare Workers（miyosino-contents-api） |
+| APIサーバー（組合員情報） | Kintoneへのプロキシ・認証 | Cloudflare Workers（各種） |
+| コンテンツストア | ヒーロー画像・コミュニティ・施設等 | MicroCMS |
+| データストア | 組合員向け情報管理 | Kintone（k-miyosino.cybozu.com） |
 | 周辺施設同期 | Google Places → Kintone定期同期 | GitHub Actions + scripts/sync-places.ts |
 | フォーム保護 | スパム対策 | Cloudflare Turnstile |
 | アクセス解析 | Google Analytics | GA4（G-CF38V5SRBT） |
 
-> **MicroCMS について:** 以前はコンテンツ管理にMicroCMSを使用していましたが、現在はCloudflare Workers + Kintoneに移行済みです。詳細は [MicroCMS](../05-known-issues/microcms.md) を参照してください。
+> **MicroCMSとKintoneの使い分け:** 公開ページのコンテンツ（画像・施設説明等）はMicroCMS、組合員専用ページの情報（お知らせ・回覧板等）はKintoneで管理しています。詳細は [MicroCMS](../05-known-issues/microcms.md) を参照してください。
 
 ## 通常のデータフロー
 

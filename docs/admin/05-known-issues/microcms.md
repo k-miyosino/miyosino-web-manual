@@ -6,34 +6,85 @@ title: MicroCMS
 
 ## 概要
 
-MicroCMSはヘッドレスCMSサービスです。以前はコンテンツ管理にMicroCMSを使用していましたが、現在は**Cloudflare Workers + Kintone**に移行しています。
+MicroCMSはサイボウズ社が提供するヘッドレスCMSサービスです。  
+以下のページのコンテンツ管理に**現在も使用中**です。
 
-## 現在のステータス
+| ページ | 使用箇所 | コンポーネント |
+|--------|---------|--------------|
+| トップページ | ヒーロー画像 | `HeroSection.tsx` |
+| 団地の特徴 | 四季の紹介 | `SeasonsSection.tsx` |
+| コミュニティ | 自治会活動 | `CommunityActivities.tsx` |
+| コミュニティ | 住民サークル（スポーツ・文化） | `CommunityCircle.tsx` |
+| 共有施設・サービス | 共用施設一覧 | `CommonFacilitiesSection.tsx` |
+| 共有施設・サービス | サービス一覧 | `ServicesSection.tsx` |
 
-- `.env.local` にMicroCMSの設定がコメントアウトされた状態で残っています
-- 現在のホームページはCloudflare WorkersのAPIを優先して使用しています
-- MicroCMSは現在使用していません（廃止・移行済み）
+---
 
-## コメントアウトされた設定（`.env.local`）
+## アクセス構造
 
-```bash
-# MicroCMS設定（現在未使用 - Cloudflare Workersに移行済み）
-# MICROCMS_SERVICE_DOMAIN=...
-# MICROCMS_API_KEY=...
+MicroCMSには**Next.jsから直接アクセスしていません**。  
+Cloudflare Workers（`miyosino-contents-api`）がプロキシとして間に入り、APIキーはWorker側で管理されています。
+
+```
+ブラウザ（Next.js）
+    │
+    ▼（NEXT_PUBLIC_CONTENTS_API_ENDPOINT）
+Cloudflare Workers（miyosino-contents-api）
+    │  MicroCMS APIキーをWorker Secretで保持
+    ▼
+MicroCMS（コンテンツストア）
+    ├── トップ画像
+    ├── 四季
+    ├── 自治会活動
+    ├── 住民サークル（スポーツ・文化）
+    ├── 共用施設
+    └── サービス
 ```
 
-## MicroCMSアカウントについて
+---
 
-MicroCMSのアカウントが残っている場合は、以下を確認してください。
+## 環境変数
 
-- [ ] MicroCMSのアカウントが存在するか
-- [ ] 課金されていないか（無料プランの場合は問題なし）
-- [ ] 不要であれば解約・削除を検討
+Next.js側に必要な環境変数は以下の1つのみです。  
+MicroCMSのAPIキーはNext.js側には不要（Worker側で管理）。
 
-## 削除手順（コードクリーンアップ）
+| 変数名 | 設定場所 | 内容 |
+|--------|---------|------|
+| `NEXT_PUBLIC_CONTENTS_API_ENDPOINT` | `.env.local` / GitHub Secrets | `miyosino-contents-api` WorkerのURL |
 
-将来的にコードからMicroCMS関連の記述を完全に削除する場合:
+---
 
-1. `.env.local` からMicroCMS関連のコメント行を削除
-2. `package.json` にMicroCMS SDKが残っていれば削除（現在は含まれていません）
-3. コンポーネント内にMicroCMSへの参照が残っていればGrep検索して削除
+## MicroCMS管理画面
+
+コンテンツの追加・編集・削除はMicroCMS管理画面から行います。
+
+> MicroCMSの管理画面URLとログイン情報はIT委員会の引き継ぎ資料を確認してください。
+
+### コンテンツ種別（APIスキーマ）
+
+MicroCMS上のコンテンツは `category` フィールドでページごとに分類されています。  
+カテゴリIDは `src/types/categories.ts`（miyosino-webリポジトリ）で定義されています。
+
+| カテゴリID | 用途 |
+|-----------|------|
+| `top-image` | トップページのヒーロー画像 |
+| `season` | 団地の特徴 > 四季 |
+| `community-activities` | コミュニティ > 自治会活動 |
+| `community-circle-sports` | コミュニティ > スポーツサークル |
+| `community-circle-culture` | コミュニティ > 文化サークル |
+| `facility` | 共有施設 > 共用施設 |
+| `service` | 共有施設 > サービス |
+
+---
+
+## コンテンツ更新方法
+
+MicroCMSのコンテンツ更新は[コンテンツ更新者向けマニュアル](../../content/index.md)ではなく、  
+**MicroCMS管理画面**から直接操作します（Kintoneとは別系統です）。
+
+---
+
+## 注意事項
+
+- MicroCMSのAPIキー管理はWorkerのSecret（Wrangler）で行います。APIキーを再発行した場合はWorkerのSecretも更新が必要です
+- MicroCMSのプラン・課金状況はIT委員会で把握・管理してください
