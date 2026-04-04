@@ -29,7 +29,7 @@ title: ホームページとは
 
 ホームページのアドレスは次のとおりです。
 
-> **https://www.miyosino.com/**  
+> **https://www.k-miyosino.com/**  
 > ※ブックマーク（お気に入り）に登録しておくと便利です
 
 ---

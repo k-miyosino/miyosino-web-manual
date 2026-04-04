@@ -13,7 +13,7 @@ title: ホームページを開く方法
 **手順2:** 画面上部にある細長い入力欄（アドレスバー）に、次のアドレスを入力してEnterキーを押します。
 
 ```
-https://www.miyosino.com/
+https://www.k-miyosino.com/
 ```
 
 **手順3:** ホームページが表示されます。
@@ -27,7 +27,7 @@ https://www.miyosino.com/
 **手順2:** 画面上部または下部のアドレス入力欄をタップし、次のアドレスを入力して「開く」または「移動」をタップします。
 
 ```
-https://www.miyosino.com/
+https://www.k-miyosino.com/
 ```
 
 **手順3:** ホームページが表示されます。
