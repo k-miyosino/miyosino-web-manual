@@ -16,8 +16,8 @@
     "output": "_site",
     "template": ["default", "modern"],
     "globalMetadata": {
-      "_appTitle": "かわつる三芳野団地 マニュアル",
-      "_appName": "みよしのマニュアル",
+      "_appTitle": "かわつる三芳野団地 ホームページ マニュアル",
+      "_appName": "かわつる三芳野団地 ホームページ マニュアル",
       "_appFooter": "Copyright &copy; かわつる三芳野団地管理組合法人 IT委員会",
       "_enableSearch": true,
       "_disableContribution": true,
