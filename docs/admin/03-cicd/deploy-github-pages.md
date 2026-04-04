@@ -30,5 +30,6 @@ title: GitHub Pagesデプロイ（ステージング）
 
 ## ステージングURL
 
-リポジトリのSettings → Pages に表示されるURLでアクセスできます。  
-`https://anorimura-miyosino.github.io/miyosino-web/` のような形式です。
+**https://k-miyosino.github.io/miyosino-web/**
+
+GitHubの組織アカウント [k-miyosino](https://github.com/k-miyosino) のGitHub Pagesとして公開されています。

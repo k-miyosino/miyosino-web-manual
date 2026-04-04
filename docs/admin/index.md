@@ -6,6 +6,20 @@ title: IT委員会向けマニュアル
 
 かわつる三芳野団地ホームページのシステム構成・運用・保守に関する技術情報をまとめています。
 
+## GitHub組織アカウント
+
+ソースコード・ワークフロー・GitHub Pagesはすべて以下の組織アカウントで管理されています。
+
+| 項目 | URL |
+|------|-----|
+| GitHub組織アカウント | https://github.com/k-miyosino |
+| ホームページリポジトリ | https://github.com/k-miyosino/miyosino-web |
+| マニュアルリポジトリ | https://github.com/k-miyosino/miyosino-web-manual |
+| ステージング（GitHub Pages） | https://k-miyosino.github.io/miyosino-web/ |
+| マニュアルサイト（GitHub Pages） | https://k-miyosino.github.io/miyosino-web-manual/ |
+
+> **引き継ぎ時の注意:** 組織アカウントへのアクセス権（オーナー権限）の移譲が必要です。GitHub の Settings → Members で管理できます。
+
 ## このマニュアルの対象者
 
 - IT委員会メンバー
