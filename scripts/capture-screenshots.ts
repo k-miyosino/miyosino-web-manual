@@ -44,6 +44,13 @@ async function captureLoginImages(page: Page, out: string) {
   const headerBox = await page.locator('header').first().boundingBox();
   await shot(page, path.join(out, 'header.png'), headerBox ?? undefined);
 
+  // footer.png — フッター全体
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(300);
+  const footerBox = await page.locator('footer').first().boundingBox();
+  await shot(page, path.join(out, 'footer.png'), footerBox ?? undefined);
+  await page.evaluate(() => window.scrollTo(0, 0));
+
   // member-button.png — 「組合員専用」ボタン
   const memberBtn = page.getByRole('link', { name: /組合員専用/ }).first();
   const btnBox = await memberBtn.boundingBox();
