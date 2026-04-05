@@ -22,7 +22,7 @@ title: Kintone（バックエンド）
 ## Kintone管理画面へのアクセス
 
 [Kintone管理画面](https://k-miyosino.cybozu.com/) にログインして操作します。  
-コンテンツ更新の手順は [コンテンツ更新者向けマニュアル](../../content/index.md) を参照してください。
+コンテンツ更新の手順は [運用者向けマニュアル](../../content/index.md) を参照してください。
 
 ## APIトークンについて
 

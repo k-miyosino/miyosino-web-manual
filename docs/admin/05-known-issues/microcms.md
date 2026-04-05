@@ -79,7 +79,7 @@ MicroCMS上のコンテンツは `category` フィールドでページごとに
 
 ## コンテンツ更新方法
 
-MicroCMSのコンテンツ更新は[コンテンツ更新者向けマニュアル](../../content/index.md)ではなく、  
+MicroCMSのコンテンツ更新は[運用者向けマニュアル](../../content/index.md)ではなく、  
 **MicroCMS管理画面**から直接操作します（Kintoneとは別系統です）。
 
 ---
