@@ -7,7 +7,9 @@
     "install-browsers": "playwright install --with-deps chromium"
   },
   "dependencies": {
+    "@types/qrcode": "^1.5.5",
     "playwright": "^1.44.0",
+    "qrcode": "^1.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }

@@ -113,6 +113,24 @@ async function capturePublicPages(page: Page, out: string) {
     await goto(page, `${BASE_URL}${p.path}`);
     await shot(page, path.join(out, p.file));
   }
+
+  // features-subheader.png — ページタイトル（h1）＋セクションナビタブをまとめたサブヘッダー
+  await goto(page, `${BASE_URL}/features`);
+  const h1El = page.locator('main h1').first();
+  const navEl = page.locator('main nav, [role="tablist"], [class*="tab"]').first();
+  const h1Box = await h1El.boundingBox();
+  const navBox = await navEl.boundingBox();
+  if (h1Box && navBox) {
+    await shot(page, path.join(out, 'features-subheader.png'), {
+      x: Math.min(h1Box.x, navBox.x),
+      y: h1Box.y,
+      width: Math.max(h1Box.width, navBox.width),
+      height: (navBox.y + navBox.height) - h1Box.y,
+    });
+  } else {
+    console.warn('  WARN: サブヘッダー要素が見つかりませんでした。全体を撮影します');
+    await shot(page, path.join(out, 'features-subheader.png'));
+  }
 }
 
 // ---------------------------------------------------------------------------
