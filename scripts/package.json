@@ -1,0 +1,14 @@
+{
+  "name": "miyosino-doc-screenshots",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "capture": "ts-node capture-screenshots.ts",
+    "install-browsers": "playwright install --with-deps chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.44.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
