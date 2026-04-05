@@ -47,16 +47,18 @@
   items:
     - name: お知らせを見る
       href: 05-member-pages/announcements.md
+    - name: 団地運営を見る
+      href: 05-member-pages/management.md
+    - name: グリーンウェルネスを見る
+      href: 05-member-pages/green-wellness.md
     - name: 回覧板を見る
       href: 05-member-pages/circulars.md
-    - name: イベント情報を見る
-      href: 05-member-pages/events.md
     - name: 会議情報を見る
       href: 05-member-pages/minutes.md
     - name: 各種申請書をダウンロードする
       href: 05-member-pages/applications.md
-    - name: グリーンウェルネスを見る
-      href: 05-member-pages/green-wellness.md
+    - name: イベント情報を見る
+      href: 05-member-pages/events.md
 
 - name: 困ったときは
   items:

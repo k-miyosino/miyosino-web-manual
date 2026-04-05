@@ -71,25 +71,32 @@ async function captureLoginImages(page: Page, out: string) {
   await goto(page, `${BASE_URL}/member`);
   await shot(page, path.join(out, 'login-screen.png'));
 
-  // logout-button.png — ログアウトボタン（認証必須、環境変数がない場合スキップ）
+  // kintone-auth.png — ログイン後に表示される Kintone 許可画面（認証必須）
   const memberId = process.env.MEMBER_ID;
   const memberPassword = process.env.MEMBER_PASSWORD;
   if (memberId && memberPassword) {
+    await goto(page, `${BASE_URL}/member`);
     const idField = page.getByLabel('ID').or(page.locator('input[type="text"]')).first();
     const pwField = page.getByLabel('パスワード').or(page.locator('input[type="password"]')).first();
     await idField.fill(memberId);
     await pwField.fill(memberPassword);
     await page.getByRole('button', { name: /ログイン/ }).click();
+    // Kintone OAuth 認証ページへのリダイレクトを待つ
+    await page.waitForURL('**/oauth2/authorization**', { timeout: 15000 });
     await page.waitForLoadState('networkidle');
-    const logoutBtn = page
-      .getByRole('button', { name: /ログアウト/ })
-      .or(page.getByRole('link', { name: /ログアウト/ }))
-      .first();
-    const logoutBox = await logoutBtn.boundingBox();
-    const validBox = logoutBox && logoutBox.width > 0 && logoutBox.height > 0 ? logoutBox : undefined;
-    await shot(page, path.join(out, 'logout-button.png'), validBox);
+    await shot(page, path.join(out, 'kintone-auth.png'));
+
+    // 「許可する」ボタンをクリックして組合員専用ページへ進む
+    const allowBtn = page.getByRole('button', { name: '許可' });
+    await allowBtn.click({ timeout: 10000 });
+    await page.waitForURL(`${BASE_URL}/**`, { timeout: 15000 });
+    await page.waitForLoadState('networkidle');
+
+    // member-top.png — 組合員専用トップページ
+    await shot(page, path.join(out, 'member-top.png'));
+    console.log(`  現在のURL: ${page.url()}`);
   } else {
-    console.log('  SKIP: logout-button.png（MEMBER_ID / MEMBER_PASSWORD が未設定）');
+    console.log('  SKIP: kintone-auth.png / member-top.png（MEMBER_ID / MEMBER_PASSWORD が未設定）');
   }
 }
 
@@ -107,6 +114,7 @@ async function capturePublicPages(page: Page, out: string) {
     { file: 'facilities.png', path: '/facilities', label: '共有施設' },
     { file: 'surrounding.png', path: '/surrounding', label: '周辺施設' },
     { file: 'access.png', path: '/access', label: 'アクセス' },
+    { file: 'contact.png', path: '/contact', label: 'お問い合わせ' },
   ];
 
   for (const p of pages) {
@@ -134,7 +142,59 @@ async function capturePublicPages(page: Page, out: string) {
 }
 
 // ---------------------------------------------------------------------------
-// 3. resident/images/ — モバイル表示
+// 3. resident/images/ — 組合員専用ページ（要ログイン）
+// ---------------------------------------------------------------------------
+
+async function captureMemberPages(page: Page, out: string) {
+  if (!process.env.MEMBER_ID || !process.env.MEMBER_PASSWORD) {
+    console.log('\n[組合員専用ページ] SKIP（MEMBER_ID / MEMBER_PASSWORD が未設定）');
+    return;
+  }
+  console.log('\n[組合員専用ページ]');
+
+  // ログイン済みセッションを前提。URLは実際のサイト構造に合わせて調整すること
+  const memberPages: Array<{ file: string; path: string; label: string }> = [
+    { file: 'member-announcements.png', path: '/member/announcements', label: 'お知らせ' },
+    { file: 'member-circulars.png',     path: '/member/circulars',     label: '回覧板' },
+    { file: 'member-events.png',        path: '/member/events',        label: 'イベント' },
+    { file: 'member-applications.png',  path: '/member/applications',  label: '各種申請書' },
+    { file: 'member-green-wellness.png',path: '/member/green-wellness',label: 'グリーンウェルネス' },
+    { file: 'member-management.png',    path: '/member/management',    label: '団地運営' },
+  ];
+
+  for (const p of memberPages) {
+    await goto(page, `${BASE_URL}${p.path}`);
+    console.log(`  現在のURL: ${page.url()}`);
+    await shot(page, path.join(out, p.file));
+  }
+
+  // member-minutes-top.png — 会議情報ページ（タイトル含む、スクロールなし）
+  await goto(page, `${BASE_URL}/member/minutes`);
+  console.log(`  現在のURL: ${page.url()}`);
+  await shot(page, path.join(out, 'member-minutes-top.png'));
+
+  // member-minutes.png — スクロールして音声ファイルも表示
+  await page.evaluate(() => window.scrollBy(0, 300));
+  await page.waitForTimeout(300);
+  await shot(page, path.join(out, 'member-minutes.png'));
+
+
+  // member-events-calendar.png — イベントページのカレンダー表示
+  await goto(page, `${BASE_URL}/member/events`);
+  const calendarBtn = page.getByRole('button', { name: /カレンダー/ }).or(
+    page.getByRole('tab', { name: /カレンダー/ })
+  ).first();
+  try {
+    await calendarBtn.click({ timeout: 5000 });
+    await page.waitForLoadState('networkidle');
+    await shot(page, path.join(out, 'member-events-calendar.png'));
+  } catch {
+    console.warn('  WARN: カレンダーボタンが見つかりませんでした');
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 4. resident/images/ — モバイル表示
 // ---------------------------------------------------------------------------
 
 async function captureMobileImages(context: BrowserContext, out: string) {
@@ -178,6 +238,7 @@ async function captureMobileImages(context: BrowserContext, out: string) {
 
   try {
     await captureLoginImages(page, residentImagesDir);
+    await captureMemberPages(page, residentImagesDir);
     await capturePublicPages(page, residentImagesDir);
     await captureMobileImages(context, residentImagesDir);
     console.log('\n完了: すべてのスクリーンショットを保存しました。');
