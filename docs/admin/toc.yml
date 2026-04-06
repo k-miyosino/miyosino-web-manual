@@ -11,6 +11,8 @@
       href: 01-architecture/cloudflare-workers.md
     - name: Kintone（バックエンド）
       href: 01-architecture/kintone-backend.md
+    - name: MicroCMS（コンテンツストア）
+      href: 01-architecture/microcms.md
     - name: 認証フロー
       href: 01-architecture/auth-flow.md
     - name: 周辺施設データ同期（sync-places）
@@ -51,5 +53,3 @@
       href: 05-known-issues/google-cloud-singlepoint.md
     - name: SonarQube
       href: 05-known-issues/sonarqube.md
-    - name: MicroCMS
-      href: 05-known-issues/microcms.md

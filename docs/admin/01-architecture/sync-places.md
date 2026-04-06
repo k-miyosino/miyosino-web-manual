@@ -17,23 +17,23 @@ title: 周辺施設データ同期（sync-places）
 ```mermaid
 flowchart TD
     subgraph Trigger["トリガー"]
-        Cron["スケジュール実行\n毎週日曜 18:00 UTC\n（月曜 AM 3:00 JST）"]
-        Manual["手動実行\nGitHub Actions\nRun workflow"]
+        Cron["スケジュール実行<br/>毎週月曜 18:00 UTC<br/>（月曜 AM 3:00 JST）"]
+        Manual["手動実行<br/>GitHub Actions<br/>Run workflow"]
     end
 
-    GHA["GitHub Actions\nsync.yml"]
-    Places["Google Cloud Places API\n※個人アカウント管理"]
+    GHA["GitHub Actions<br/>sync.yml"]
+    Places["Google Cloud Places API<br/>※個人アカウント管理"]
     Script["scripts/sync-places.ts"]
 
     subgraph Diff["差分処理"]
-        Add["新規施設\n→ レコード追加"]
-        Update["情報変更\n→ レコード更新"]
-        Delete["廃業等\n→ レコード削除"]
+        Add["新規施設<br/>→ レコード追加"]
+        Update["情報変更<br/>→ レコード更新"]
+        Delete["廃業等<br/>→ レコード削除"]
     end
 
-    Kintone["Kintone アプリ #120\n（周辺施設）"]
-    Worker["Cloudflare Workers\nmiyosino-places-api"]
-    HP["ホームページ\n周辺施設ページ"]
+    Kintone["Kintone アプリ #120<br/>（周辺施設）"]
+    Worker["Cloudflare Workers<br/>miyosino-places-api"]
+    HP["ホームページ<br/>周辺施設ページ"]
 
     Trigger --> GHA
     GHA -->|"施設情報を取得"| Places
