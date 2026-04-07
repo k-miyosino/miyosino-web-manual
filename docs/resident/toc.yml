@@ -31,7 +31,7 @@
       href: 03-public-pages/surrounding.md
     - name: アクセス
       href: 03-public-pages/access.md
-    - name: お問い合わせの送りかた
+    - name: お問い合わせ
       href: 03-public-pages/contact.md
 
 - name: 組合員専用ページへのログイン
@@ -40,8 +40,8 @@
       href: 04-login/what-is-login.md
     - name: ログインの方法
       href: 04-login/how-to-login.md
-    - name: ログアウトのしかた
-      href: 04-login/logout.md
+    - name: ログアウトの方法
+      href: 04-login/how-to-logout.md
 
 - name: 組合員専用ページの使いかた
   items:
